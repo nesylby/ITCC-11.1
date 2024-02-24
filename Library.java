@@ -77,34 +77,58 @@ public class Library {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Choose your item: Book/DVD");
-        String itemType = scanner.nextLine();
+        System.out.println("1. Return Item \n2. Borrow Item");
+        String choice = scanner.nextLine();
 
-        LibraryItem item = null;
-        if (itemType.equalsIgnoreCase("Book")) {
-            item = new Book();
-        } else if (itemType.equalsIgnoreCase("DVD")) {
-            item = new DVD();
-        } else {
-            System.out.println("Invalid item type.");
-            return;
-        }
-
-        LibraryUser user = new LibraryUser() {
-            @Override
-            void printItemsBorrowed() {
-                System.out.println("--------------------------");
-                System.out.println("Teacher: " + name);
-                for (LibraryItem borrowedItem : borrowedItems) {
-                    System.out.println("Borrowed Item: " + borrowedItem);
-                }
-                System.out.println("--------------------------");
+        if (choice.equals("1")) {
+            System.out.println("Choose item to return: Book/DVD");
+            String itemType = scanner.nextLine();
+            LibraryItem item;
+            if (itemType.equalsIgnoreCase("Book")) {
+                item = new Book();
+            } else if (itemType.equalsIgnoreCase("DVD")) {
+                item = new DVD();
+            } else {
+                System.out.println("Invalid item type.");
+                return;
             }
-        };
 
-        user.name = "John Doe";
-        user.borrowItem(item);
-        user.printItemsBorrowed();
+            System.out.println("Enter " + item + " Title: ");
+            String itemTitle = scanner.nextLine();
+            // Assuming you want to do something with the title, add the necessary logic here
+
+            // Now we have an item, you can do whatever operations you want with it
+            item.returnItem();
+            System.out.println("Item returned successfully.");
+    
+        } else if (choice.equals("2")) {
+            System.out.println("Choose item type: Book/DVD");
+            String itemType = scanner.nextLine();
+    
+            LibraryItem item;
+            if (itemType.equalsIgnoreCase("Book")) {
+                item = new Book();
+            } else if (itemType.equalsIgnoreCase("DVD")) {
+                item = new DVD();
+            } else {
+                System.out.println("Invalid item type.");
+                return;
+            }
+
+            LibraryUser user = new LibraryUser() {
+                @Override
+                public void printItemsBorrowed() {
+                    System.out.println("--------------------------");
+                    System.out.println("User: " + name);
+                    for (LibraryItem borrowedItem : borrowedItems) {
+                        System.out.println("Borrowed Item: " + borrowedItem);
+                    }
+                    System.out.println("--------------------------");
+                }
+            };
+        } else {
+            System.out.println("Invalid choice.");
+        }
 
         scanner.close();
     }
